@@ -49,7 +49,5 @@ touch "projects/$directory_name/src/outputs.tf"
 
 # Create script files
 cp "./scripts/templates/mod.bash" "projects/$directory_name/mod.bash"
-cp "./scripts/templates/plan.bash" "projects/$directory_name/plan.bash"
-cp "./scripts/templates/apply.bash" "projects/$directory_name/apply.bash"
 
 echo "Directory structure and files created successfully in projects/$directory_name."

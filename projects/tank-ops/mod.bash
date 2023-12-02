@@ -33,7 +33,7 @@ if [ -z "$module_name" ]; then
 fi
 
 # Create module directory and files
-mkdir -p "../modules/$module_name"
+mkdir -p "./modules/$module_name"
 touch "../modules/$module_name/main.tf" "../modules/$module_name/variables.tf" "../modules/$module_name/outputs.tf"
 
 echo "Module structure and files created successfully in modules/$module_name."
