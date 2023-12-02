@@ -22,3 +22,8 @@ variable "private_subnets" {
   description = "List of private subnets"
   type        = list(string)
 }
+
+variable "ec2_type" {
+  description = "Type for main EC2 instance"
+  type        = string
+}

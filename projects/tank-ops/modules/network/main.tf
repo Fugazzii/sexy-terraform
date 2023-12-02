@@ -16,7 +16,6 @@ locals {
   vpc_id = aws_vpc.this.id
 }
 
-
 /*
   * IGW
 */
@@ -36,9 +35,11 @@ resource "aws_internet_gateway" "this" {
 */
 
 resource "aws_subnet" "public" {
-  vpc_id     = local.vpc_id
-  count      = length(var.public_subnets)
-  cidr_block = var.public_subnets[count.index]
+  vpc_id                  = local.vpc_id
+  count                   = length(var.public_subnets)
+  cidr_block              = var.public_subnets[count.index]
+  availability_zone       = var.azs[count.index]
+  map_public_ip_on_launch = true
 
   tags = {
     Description = "Main public subnet in VPC"
@@ -48,9 +49,11 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_subnet" "private" {
-  vpc_id     = local.vpc_id
-  count      = length(var.private_subnets)
-  cidr_block = var.private_subnets[count.index]
+  vpc_id                  = local.vpc_id
+  count                   = length(var.private_subnets)
+  cidr_block              = var.private_subnets[count.index]
+  availability_zone       = var.azs[count.index]
+  map_public_ip_on_launch = false
 
   tags = {
     Description = "Main private subnet in VPC"
@@ -107,5 +110,17 @@ resource "aws_eip" "vm_ip" {
 
   lifecycle {
     create_before_destroy = true
+  }
+}
+
+/*
+  * NETWORK INTERFACE
+*/
+
+resource "aws_network_interface" "ec2_nic" {
+  subnet_id = aws_subnet.public[0].id
+
+  tags = {
+    Description = "This is supposed to be attached to main EC2 instance"
   }
 }
